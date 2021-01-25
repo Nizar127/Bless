@@ -1,26 +1,15 @@
 <resources>
     <string name="app_name">BlessApp</string>
-    <string name="best_text">(anniversary)
-- Happy Anniversary, Love. My love for you grows with each passing year.
-- After 10 years, I still feel like we are newlyweds.
-(baby welcome)
-- Congratulations on the birth of you new baby.
-- Congratulations on your new bundle of joy.
-
-(graduation)
-- Congratulations! Glad to hear the good news!
-- Congratulations! Keep up the good work.
-
-(wedding)
--  To happy endings and new beginnings. Congratulations!
-- Congratulations and best wishes for a beautiful future.
-
-(birthday)
-- May all your birthday wishes come true!
-- Wishing you a special birthday.
-
-(corporate)
-- Its always a pleasure working with you.
-- Best of luck in your new venture.
-    </string>
+    <string name="anniversary">(anniversary)->Happy Anniversary, Love. My love for you grows with each passing year.</string>
+    <string name="anniversary2">(anniversary)-> After 10 years, I still feel like we are newlyweds.</string>
+    <string name="baby_welcome">(baby welcome)-> Congratulations on the birth of you new baby.</string>
+    <string name="baby_welcome2">(baby welcome)-> Congratulations on your new bundle of joy.</string>
+    <string name="graduation">(graduation)-> Congratulations! Glad to hear the good news!</string>
+    <string name="graduation2">(graduation)-> Congratulations! Keep up the good work.</string>
+    <string name="wedding">(wedding)-> To happy endings and new beginnings. Congratulations!</string>
+    <string name="wedding2">(wedding)-> - Congratulations and best wishes for a beautiful future.</string>
+    <string name="birthday">(birthday)-> May all your birthday wishes come true!</string>
+    <string name="birthday2">(birthday)-> Wishing you a special birthday.</string>
+    <string name="corporate">(corporate)-> Its always a pleasure working with you.</string>
+    <string name="corporate2">(corporate)-> Best of luck in your new venture.</string>
 </resources>

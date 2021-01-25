@@ -31,7 +31,7 @@ public class ProductPageActivity extends AppCompatActivity {
     Boolean fvrtChecker = false;
     Product productItem;
     ProductPageAdapter adapter;
-    ImageView cartBtn, profileBtn, arrowBtn;
+    ImageView cartBtn, profileBtn, arrowBtn, lovebtn;
 
 
     @Override
@@ -43,12 +43,21 @@ public class ProductPageActivity extends AppCompatActivity {
         cartBtn = findViewById(R.id.cart_id);
         profileBtn = findViewById(R.id.profile_id);
         arrowBtn = findViewById(R.id.back_btn_productArrow);
+        lovebtn = findViewById(R.id.favourite_id);
+
+        lovebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProductPageActivity.this, FavouriteMainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         cartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(ProductPageActivity.this, ProductDetailsActivity.class);
+                Intent intent = new Intent(ProductPageActivity.this, CartActivity.class);
                 startActivity(intent);
             }
         });

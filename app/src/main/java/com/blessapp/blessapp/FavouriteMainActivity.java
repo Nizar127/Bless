@@ -11,7 +11,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.blessapp.blessapp.Model.Favourite;
 import com.blessapp.blessapp.Model.Product;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -24,9 +26,10 @@ import com.google.firebase.database.FirebaseDatabase;
 public class FavouriteMainActivity extends AppCompatActivity {
 
     RecyclerView favrecyclerView;
-    BottomNavigationView bottomNav;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference reference ;
+    DatabaseReference reference, mAuth;
+    ImageView cartBtn, arrowBtn, profileBtn;
+    FavouriteAdapter favouriteAdapter;
 
 
     @Override
@@ -34,76 +37,74 @@ public class FavouriteMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favourite_main);
 
-        bottomNav = findViewById(R.id.bottom_navigation);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String currentUserid = user.getUid();
 
-        favrecyclerView = findViewById(R.id.favouriteRecycler);
+        cartBtn = findViewById(R.id.cart_id);
+        profileBtn = findViewById(R.id.profile_id);
+        mAuth = FirebaseDatabase.getInstance().getReference("Products").child(currentUserid).child("User View").child("favourites").child("favourite_list");
+
+        arrowBtn = findViewById(R.id.back_btn_favouriteArrow);
+
+        arrowBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+        cartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(FavouriteMainActivity.this, CartActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        profileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(FavouriteMainActivity.this, ProfileMainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+        favrecyclerView = findViewById(R.id.FavouriteRecycler);
        favrecyclerView.setHasFixedSize(true);
         // favrecyclerView.setHasFixedSize(true);
         favrecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        reference = database.getReference("favoriteList").child(currentUserid);
+//        reference = database.getReference("favoriteList").child(currentUserid);
 
-        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.tab_home:
-                        startActivity(new Intent(getApplicationContext(), ProductPageActivity.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                    case R.id.tab_explore:
-                        startActivity(new Intent(getApplicationContext(), ExploreMainActivity.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                    case R.id.tab_favourite:
-/*                        startActivity(new Intent(getApplicationContext(), FavouriteMainActivity.class));
-                        overridePendingTransition(0,0);*/
-                        return true;
-                    case R.id.tab_profile:
-                        startActivity(new Intent(getApplicationContext(), ProfileMainActivity.class));
-                        overridePendingTransition(0,0);
-                        return true;
 
-                }
-                return false;
-            }
-        });
+      FirebaseRecyclerOptions<Favourite> options =
+              new FirebaseRecyclerOptions.Builder<Favourite>()
+              .setQuery(mAuth, Favourite.class)
+              .build();
 
-        FirebaseRecyclerOptions<Product> options =
-                new FirebaseRecyclerOptions.Builder<Product>()
-                        .setQuery(reference, Product.class)
-                        .build();
+      favouriteAdapter = new FavouriteAdapter(options);
 
-        FirebaseRecyclerAdapter<Product, com.blessapp.blessapp.Product_Viewholder> firebaseRecyclerAdapter =
-                new FirebaseRecyclerAdapter<Product, com.blessapp.blessapp.Product_Viewholder>(options) {
-                    @Override
-                    protected void onBindViewHolder(@NonNull com.blessapp.blessapp.Product_Viewholder holder, int position, @NonNull final Product model) {
-                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        final String currentUserid = user.getUid();
-
-                        final  String postkey = getRef(position).getKey();
-
-                        holder.setItemFavourite(getApplication(), model.getName(), model.getDescription(), model.getPrice(),
-                                model.getImage(), model.getCategory(), model.getPid(),model.getUserid(), model.getDate(), model.getTime(), model.getNameLower());
-
-                        final String name = getItem(position).getName();
-                        final String userid = getItem(position).getUserid();
-                    }
-
-                    @NonNull
-                    @Override
-                    public com.blessapp.blessapp.Product_Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.favourite_item, parent, false);
-                        return new com.blessapp.blessapp.Product_Viewholder(view);
-                    }
-                };
-
-        firebaseRecyclerAdapter.startListening();
-
-        favrecyclerView.setAdapter(firebaseRecyclerAdapter);
+      favrecyclerView.setAdapter(favouriteAdapter);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        favouriteAdapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        favouriteAdapter.stopListening();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(FavouriteMainActivity.this, ProductPageActivity.class);
+        startActivity(intent);
+    }
 }

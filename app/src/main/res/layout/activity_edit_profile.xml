@@ -4,6 +4,214 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EditProfileActivity">
+    tools:context=".ProfileUserInfoActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_editprofilepage"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/candyapple">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/back_btn_editprofileArrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_arrow_back_white_24dp" />
+
+                    <TextView
+                        android:id="@+id/textprofileinfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Profile Information"
+                        android:layout_toEndOf="@+id/back_btn_editprofileArrow"
+                        android:layout_toRightOf="@+id/update_account_settings_btn"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@color/White"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/allerta"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        tools:ignore="RtlCompat" />
+
+
+                    <ImageView
+                        android:id="@+id/cart_id"
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="30dp"
+                        android:layout_toEndOf="@+id/textprofileinfo"
+                        android:foregroundGravity="right"
+                        android:src="@drawable/cart"
+                        tools:ignore="RtlCompat" />
+
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_below="@+id/toolbar_editprofilepage">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/user_profile_image"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:src="@mipmap/ic_launcher"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/app_bar_settings"
+                android:layout_margin="20dp"
+                app:civ_border_width="5dp"
+                app:civ_border_color="@color/colorPrimaryDark"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Phone No."
+                    android:textSize="20dp"
+                    android:layout_margin="15dp"
+                    android:textStyle="bold"
+                    android:textAlignment="center"/>
+
+                <TextView
+                    android:id="@+id/profile_phone_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:hint="Phone Number"
+                    android:textColor="@color/Black"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/audiowide"
+                    android:padding="10dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="UserName"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:layout_margin="15dp"/>
+
+                <TextView
+                    android:id="@+id/profile_full_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:hint="Full Name"
+                    android:textColor="@color/Black"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/audiowide"
+                    android:padding="10dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Email"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:layout_margin="15dp"/>
+
+                <TextView
+                    android:id="@+id/profile_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:hint="Email"
+                    android:textColor="@color/Black"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/audiowide"
+                    android:padding="10dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Birthdate"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:layout_margin="15dp"/>
+
+                <TextView
+                    android:id="@+id/profile_birthdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:hint="Birthdate"
+                    android:textColor="@color/Black"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/audiowide"
+                    android:padding="10dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/editProfileBtn"
+            android:layout_width="250dp"
+            android:layout_height="61dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@color/Blue"
+            android:elevation="10dp"
+            android:fontFamily="@font/audiowide"
+            android:text="Edit Profile"
+            android:textColor="@color/GhostWhite"
+            android:textSize="20sp"
+           android:layout_margin="20dp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

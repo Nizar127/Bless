@@ -50,6 +50,15 @@
                     tools:ignore="RtlCompat" />
 
                 <ImageView
+                    android:id="@+id/favourite_id"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:layout_toStartOf="@+id/cart_id"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/favourite_likes_btn"
+                    tools:ignore="RtlCompat" />
+
+                <ImageView
                     android:id="@+id/cart_id"
                     android:layout_width="30dp"
                     android:layout_height="match_parent"

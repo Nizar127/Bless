@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddressActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar_address"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_addresspage"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/candyapple">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/back_btn_productArrow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ic_arrow_back_white_24dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Address"
+                            android:layout_toEndOf="@+id/back_btn_productArrow"
+                            android:layout_toRightOf="@+id/update_account_settings_btn"
+                            android:layout_marginStart="30dp"
+                            android:layout_marginTop="10dp"
+                            android:textColor="@color/White"
+                            android:textSize="20sp"
+                            android:fontFamily="@font/allerta"
+                            android:textStyle="bold"
+                            android:gravity="center"
+                            tools:ignore="RtlCompat" />
+
+                        <Button
+                            android:id="@+id/update_account_settings_btn"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_margin="10dp"
+                            android:text="Update"
+                            android:textColor="@color/White"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:background="@color/Green"/>
+
+
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="top"
+            android:background="#CCFFFFFF"
+            android:layout_below="@+id/app_bar_address">
+
+            <TextView
+                android:id="@+id/text_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enter your Address :"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_margin="20dp"
+                android:fontFamily="@font/audiowide"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="House Number"
+                android:textSize="15sp"
+                android:layout_marginLeft="17dp"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/address_house_no"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:hint="Enter your house number"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Street"
+                android:textSize="15sp"
+                android:layout_marginLeft="17dp"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/address_street"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:hint="Enter your street"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="House Area"
+                android:textSize="15sp"
+                android:layout_marginLeft="17dp"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/address_house_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:hint="Enter your house area"
+                android:inputType="textMultiLine"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="City"
+                android:textSize="15sp"
+                android:layout_marginLeft="17dp"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/address_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:hint="Enter your city"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

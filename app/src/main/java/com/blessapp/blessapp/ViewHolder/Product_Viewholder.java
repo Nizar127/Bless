@@ -49,7 +49,7 @@ public class Product_Viewholder extends RecyclerView.ViewHolder implements View.
 
 
    // }
-
+/*
     public void favouriteChecker(final String postkey){
         favBtn = itemView.findViewById(R.id.favourite_btn);
 
@@ -96,7 +96,7 @@ public class Product_Viewholder extends RecyclerView.ViewHolder implements View.
         Picasso.get().load(image).into(favImg);
         favName.setText(name);
         favPrice.setText(price);
-    }
+    }*/
 
 
     @Override

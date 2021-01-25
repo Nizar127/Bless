@@ -6,6 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".SignupActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,7 +20,7 @@
         <ImageView
             android:id="@+id/login_logo"
             android:layout_width="wrap_content"
-            android:layout_height="200dp"
+            android:layout_height="180dp"
             android:layout_margin="10dp"
             android:src="@drawable/logobless" />
 
@@ -33,6 +37,31 @@
 
         <EditText
             android:id="@+id/register_username_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/candyapple"
+            android:padding="20dp"
+            android:layout_margin="15dp"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/Black"
+            android:textColorHint="@color/splashname"
+            android:textSize="17sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/register_hint_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Username"
+            android:textColor="@color/splashname"
+            android:layout_marginLeft="30dp"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:visibility="gone"/>
+
+        <EditText
+            android:id="@+id/register_uname_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/candyapple"
@@ -72,6 +101,56 @@
             android:textSize="17sp"
             android:textStyle="bold"/>
 
+        <TextView
+            android:id="@+id/register_hint_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Password"
+            android:textColor="@color/Black"
+            android:layout_marginLeft="30dp"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:visibility="gone"/>
+
+        <EditText
+            android:id="@+id/register_phone_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/candyapple"
+            android:padding="20dp"
+            android:layout_margin="15dp"
+            android:hint="Phone"
+            android:textColor="@color/Black"
+            android:textColorHint="@color/splashname"
+            android:textSize="17sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/register_hint_birthdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Password"
+            android:textColor="@color/Black"
+            android:layout_marginLeft="30dp"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:visibility="gone"/>
+
+        <EditText
+            android:id="@+id/register_birthdate_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/candyapple"
+            android:padding="20dp"
+            android:layout_margin="15dp"
+            android:hint="Birthdate"
+            android:textColor="@color/Black"
+            android:textColorHint="@color/splashname"
+            android:textSize="17sp"
+            android:textStyle="bold"/>
+
+
+
 
         <Button
             android:id="@+id/register_btn"
@@ -84,17 +163,19 @@
             android:textSize="25dp"
             android:fontFamily="@font/audiowide"
             android:text="Register"
-            android:textColor="@color/White"/>
+            android:textColor="@color/White"
+            android:layout_marginBottom="20dp"/>
         <ProgressBar
             android:id="@+id/progressbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone" />
+            android:visibility="gone"
+            />
 
 
 
     </LinearLayout>
-
+    </ScrollView>
 
 
     </RelativeLayout>

@@ -3,13 +3,17 @@ package com.blessapp.blessapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.transition.AutoTransition;
+import android.transition.TransitionManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +43,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private ElegantNumberButton numberButton;
     private TextView prodDesc, prodName, prodPrice, descriptiontext;
     private String productID = "";
+    LinearLayout expandableview;
+    //Button arrowbtn;
+    LinearLayout cardview, suggestionView;
     private String productPrice;
     private String prodImgUrl;
     ImageButton plus, minus;
@@ -53,10 +60,11 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar_itemproductdetails);
 
-        plus = findViewById(R.id.expandDown);
-        minus = findViewById(R.id.expandUp);
+        expandableview = findViewById(R.id.expanded_suggestion);
+        cardview = findViewById(R.id.cardview);
+        suggestionView = findViewById(R.id.suggestion_wishes);
 
-        descriptiontext = findViewById(R.id.description_text);
+        //descriptiontext = findViewById(R.id.description_text);
         addToCartBtn = findViewById(R.id.add_to_cart_btn);
         numberButton = findViewById(R.id.number_btn);
         prodImg = findViewById(R.id.product_image_detail);
@@ -78,26 +86,22 @@ public class ProductDetailsActivity extends AppCompatActivity {
         prodImg.setImageResource(R.drawable.perfume);
         //Picasso.get().load(R.drawable.perfume).into(prodImg);
 
-        plus.setOnClickListener(new View.OnClickListener() {
+        suggestionView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                plus.setVisibility(View.GONE);
-                minus.setVisibility(View.VISIBLE);
-                descriptiontext.setMaxLines(Integer.MAX_VALUE);
-
-
+                if(expandableview.getVisibility()== View.GONE){
+                    TransitionManager.beginDelayedTransition(cardview, new AutoTransition());
+                    expandableview.setVisibility(View.VISIBLE);
+                } else {
+                    TransitionManager.beginDelayedTransition(cardview, new AutoTransition());
+                    expandableview.setVisibility(View.GONE);
+                }
             }
         });
 
-        minus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                minus.setVisibility(View.GONE);
-                plus.setVisibility(View.VISIBLE);
-                descriptiontext.setMaxLines(5);
-            }
-        });
 
+//<<<<<<< updated_20210126
+//=======
 //        addToCartBtn.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -105,18 +109,18 @@ public class ProductDetailsActivity extends AppCompatActivity {
 //                startActivity(intent);
 //            }
 //        });
-       addToCartBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-         public void onClick(View v) {
+//>>>>>>> master
+      // addToCartBtn.setOnClickListener(new View.OnClickListener() {
+         //   @Override
+       //  public void onClick(View v) {
 
                /* Intent intent = new Intent(ProductDetailsActivity.this, ExploreActivity.class);
-               startActivity(intent);
-*/
-               addToCartList();
-            }
-        });
+               startActivity(intent);*/
+         //      addToCartList();
+         //   }
+       // });
 
-    }
+   // }
 
  /*   private void orderList() {
         Intent intent = new Intent(ProductDetailsActivity.this, ExploreActivity.class);
@@ -139,11 +143,12 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         final DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference("Orders").child("Cart List");
 
+
         String totalProdAmt = numberButton.getNumber();
         float sendTotalAmt = Float.valueOf(totalProdAmt) * Float.valueOf(productPrice);
 
         final HashMap<String, Object> cartMap = new HashMap<>();
-        //cartMap.put("pid", productID);
+        cartMap.put("pid", productID);
         cartMap.put("name", prodName.getText().toString());
         cartMap.put("price", String.valueOf(sendTotalAmt));
         cartMap.put("amount", numberButton.getNumber());
@@ -168,7 +173,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
                         }
                     }
                 });
-
     }
 
     private void getProductDetails() {

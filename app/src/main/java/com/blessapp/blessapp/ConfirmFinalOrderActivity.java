@@ -93,7 +93,7 @@ public class ConfirmFinalOrderActivity extends AppCompatActivity {
                 if (dataSnapshot.exists()){
 
                     String nameDisplay = dataSnapshot.child("fullname").getValue().toString();
-                    String phoneDisplay = dataSnapshot.child("phoneOrder").getValue().toString();
+                    String phoneDisplay = dataSnapshot.child("phone").getValue().toString();
 
                     name.setText(nameDisplay);
                     phone.setText(phoneDisplay);

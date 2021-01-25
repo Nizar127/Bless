@@ -6,4 +6,114 @@
     android:layout_height="match_parent"
     tools:context=".Admin.AdminNewOrdersActivity">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_adminneworderpage"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/candyapple">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/back_btn_adminneworderArrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_arrow_back_white_24dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toEndOf="@+id/back_btn_productArrow"
+                        android:layout_toRightOf="@+id/update_account_settings_btn"
+                        android:fontFamily="@font/allerta"
+                        android:gravity="center"
+                        android:text="New Order"
+                        android:textColor="@color/White"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        tools:ignore="RtlCompat" />
+
+                    <ImageView
+                        android:id="@+id/favourite_id"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_toStartOf="@+id/cart_id"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/favourite_likes_btn"
+                        tools:ignore="RtlCompat" />
+
+                    <ImageView
+                        android:id="@+id/cart_id"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_toStartOf="@+id/profile_id"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/cart"
+                        tools:ignore="RtlCompat" />
+
+                    <ImageView
+                        android:id="@+id/profile_id"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/person_tabbar" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@+id/toolbar_adminneworderpage">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Order"
+                android:textColor="@color/Black"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"/>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/orderadminRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_below="@id/toolbar_adminneworderpage"
+                >
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+
+
+
+
+
+    </RelativeLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

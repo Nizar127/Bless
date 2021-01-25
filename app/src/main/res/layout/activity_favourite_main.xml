@@ -8,10 +8,76 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/splashname">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_productpage"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/candyapple">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/back_btn_favouriteArrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_arrow_back_white_24dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Favourite"
+                        android:layout_toEndOf="@+id/back_btn_productArrow"
+                        android:layout_toRightOf="@+id/update_account_settings_btn"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@color/White"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/allerta"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        tools:ignore="RtlCompat" />
+
+                    <ImageView
+                        android:id="@+id/cart_id"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_toStartOf="@+id/profile_id"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/cart"
+                        tools:ignore="RtlCompat" />
+
+                    <ImageView
+                        android:id="@+id/profile_id"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/person_tabbar" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/FavouriteRecycler"
+            android:layout_below="@+id/toolbar_productpage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -20,17 +86,8 @@
 
         </androidx.recyclerview.widget.RecyclerView>
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="?android:attr/windowBackground"
-            app:menu="@menu/bottom_bar" >
-
-
-        </com.google.android.material.bottomnavigation.BottomNavigationView>
 
     </RelativeLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

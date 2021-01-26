@@ -50,16 +50,6 @@
                         tools:ignore="RtlCompat" />
 
 
-
-                    <ImageView
-                        android:id="@+id/profile_id"
-                        android:layout_width="30dp"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_margin="10dp"
-                        android:src="@drawable/person_tabbar" />
-
                 </RelativeLayout>
 
             </LinearLayout>

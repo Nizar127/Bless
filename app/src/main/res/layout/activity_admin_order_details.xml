@@ -43,38 +43,14 @@
                         android:layout_toRightOf="@+id/update_account_settings_btn"
                         android:fontFamily="@font/allerta"
                         android:gravity="center"
-                        android:text="New Order"
+                        android:text="New Order Detail"
                         android:textColor="@color/White"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         tools:ignore="RtlCompat" />
 
-                    <ImageView
-                        android:id="@+id/favourite_id"
-                        android:layout_width="30dp"
-                        android:layout_height="match_parent"
-                        android:layout_toStartOf="@+id/cart_id"
-                        android:layout_margin="10dp"
-                        android:src="@drawable/favourite_likes_btn"
-                        tools:ignore="RtlCompat" />
 
-                    <ImageView
-                        android:id="@+id/cart_id"
-                        android:layout_width="30dp"
-                        android:layout_height="match_parent"
-                        android:layout_toStartOf="@+id/profile_id"
-                        android:layout_margin="10dp"
-                        android:src="@drawable/cart"
-                        tools:ignore="RtlCompat" />
 
-                    <ImageView
-                        android:id="@+id/profile_id"
-                        android:layout_width="30dp"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_margin="10dp"
-                        android:src="@drawable/person_tabbar" />
 
                 </RelativeLayout>
 

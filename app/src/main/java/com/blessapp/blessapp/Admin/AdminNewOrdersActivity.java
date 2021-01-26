@@ -30,7 +30,7 @@ import java.util.HashMap;
 public class AdminNewOrdersActivity extends AppCompatActivity {
 
     private RecyclerView ordersList;
-    //private DatabaseReference ordersRef;
+    private DatabaseReference ordersRef;
     //To round up to 2 dec place
     DecimalFormat df = new DecimalFormat("#.00");
     private float Price ;
@@ -46,9 +46,11 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
 
         //product = new Product();
 
-        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        //String pid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        //String pid = String.valueOf(FirebaseDatabase.getInstance().getReference().child("Products").child("pid"));
 
-
+        //ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders").child("pid");
+        ordersRef = FirebaseDatabase.getInstance().getReference("Orders");
         //ordersRef = FirebaseDatabase.getInstance().getReference("Orders");
         //ordersRef = FirebaseDatabase.getInstance().getReference("Orders").child(userID).child("pid");
 
@@ -70,7 +72,6 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        final DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders");
 
         FirebaseRecyclerOptions<Orders> options =
                 new FirebaseRecyclerOptions.Builder<Orders>()
@@ -147,7 +148,7 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
 
     private void RemoveOrder(String uID, String userNameAsKey) {
 
-        final DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders");
+
 
         ordersRef.child(uID).removeValue();
 
@@ -166,7 +167,7 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(AdminNewOrdersActivity.this, AdminProductManageActivity.class);
+        Intent intent = new Intent(AdminNewOrdersActivity.this, AdminManageActivity.class);
         startActivity(intent);
     }
 }

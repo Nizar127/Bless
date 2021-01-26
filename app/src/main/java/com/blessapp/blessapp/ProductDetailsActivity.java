@@ -89,12 +89,12 @@ public class ProductDetailsActivity extends AppCompatActivity {
         suggestionView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(expandableview.getVisibility()== View.GONE){
-                    TransitionManager.beginDelayedTransition(cardview, new AutoTransition());
-                    expandableview.setVisibility(View.VISIBLE);
-                } else {
+                if(expandableview.getVisibility()== View.VISIBLE){
                     TransitionManager.beginDelayedTransition(cardview, new AutoTransition());
                     expandableview.setVisibility(View.GONE);
+                } else {
+                    TransitionManager.beginDelayedTransition(cardview, new AutoTransition());
+                    expandableview.setVisibility(View.VISIBLE);
                 }
             }
         });

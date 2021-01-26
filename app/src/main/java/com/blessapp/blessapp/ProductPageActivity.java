@@ -106,6 +106,12 @@ public class ProductPageActivity extends AppCompatActivity {
         super.onStop();
         adapter.stopListening();
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ProductPageActivity.this, ProductPageActivity.class);
+        startActivity(intent);
+    }
 }
 
 

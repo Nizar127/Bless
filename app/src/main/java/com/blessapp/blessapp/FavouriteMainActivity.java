@@ -2,6 +2,7 @@ package com.blessapp.blessapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,6 +31,7 @@ public class FavouriteMainActivity extends AppCompatActivity {
     DatabaseReference reference, mAuth;
     ImageView cartBtn, arrowBtn, profileBtn;
     FavouriteAdapter favouriteAdapter;
+    Toolbar toolbar;
 
 
     @Override
@@ -37,13 +39,15 @@ public class FavouriteMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favourite_main);
 
+        toolbar = findViewById(R.id.toolbar_favouritepage);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String currentUserid = user.getUid();
 
         cartBtn = findViewById(R.id.cart_id);
         profileBtn = findViewById(R.id.profile_id);
-        mAuth = FirebaseDatabase.getInstance().getReference("Users").child(currentUserid).child("Favourite");
+        //mAuth = FirebaseDatabase.getInstance().getReference("Products").child(currentUserid).child("User View").child("favourites").child("favourite_list");
+        mAuth = FirebaseDatabase.getInstance().getReference("Favourites").child(currentUserid);
 
         arrowBtn = findViewById(R.id.back_btn_favouriteArrow);
 
@@ -77,7 +81,7 @@ public class FavouriteMainActivity extends AppCompatActivity {
         // favrecyclerView.setHasFixedSize(true);
         favrecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        reference = database.getReference("favoriteList").child(currentUserid);
+       // reference = database.getReference("favoriteList").child(currentUserid);
 
 
       FirebaseRecyclerOptions<Favourite> options =

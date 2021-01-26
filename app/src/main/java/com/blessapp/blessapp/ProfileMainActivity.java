@@ -1,11 +1,14 @@
 package com.blessapp.blessapp;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.blessapp.blessapp.Model.Users;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -26,16 +30,17 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.paperdb.Paper;
 
 public class ProfileMainActivity extends AppCompatActivity {
 
 
     Toolbar toolbar;
     ImageView backbtnarrow, cartID;
-    TextView username, emailInput, phoneNumber, birthdate, address;
+    TextView username;
     Button editBtn;
     CircleImageView userImg;
-    LinearLayout userprofile, wishlist, orderlist;
+    LinearLayout userprofile, wishlist, orderlist, logoutlayout;
     String userID = "";
 
 
@@ -52,6 +57,7 @@ public class ProfileMainActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar_profilepage);
         backbtnarrow = findViewById(R.id.back_btn_profileArrow);
+        logoutlayout = findViewById(R.id.userprofilelogout);
         backbtnarrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,8 +68,8 @@ public class ProfileMainActivity extends AppCompatActivity {
 
         username =findViewById(R.id.userprofileName);
         userprofile = findViewById(R.id.userProfileLol);
-        wishlist = findViewById(R.id.userprofileorder);
-        orderlist = findViewById(R.id.userprofilelfav);
+        wishlist = findViewById(R.id.userprofilelfav);
+        orderlist = findViewById(R.id.userprofileorder);
         cartID = findViewById(R.id.cart_id);
         userImg = findViewById(R.id.userProfileImg);
 /*        emailInput = findViewById(R.id.emailName);
@@ -100,6 +106,13 @@ public class ProfileMainActivity extends AppCompatActivity {
             }
         });
 
+        logoutlayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logout();
+            }
+        });
+
 
 
 //        editBtn.setOnClickListener(new View.OnClickListener() {
@@ -116,17 +129,68 @@ public class ProfileMainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String uname = String.valueOf(dataSnapshot.getValue());
                 String img = String.valueOf(dataSnapshot.getValue());
-                Picasso.get(dataSnapshot.img).load(userImg)
+                //Picasso.get(dataSnapshot.img).load(userImg)
                 username.setText(uname);
+                if (dataSnapshot.exists()){
+                    Users users = dataSnapshot.getValue(Users.class);
+
+                    String getUsername = users.getFullname();
+                    String userImage = users.getImage();
+
+                    username.setText(getUsername);
+                    Picasso.get().load(userImage).into(userImg);
+                    //userImg.se
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        })
+        });
 
     }
+
+    private void logout() {
+
+        CharSequence options[] = new CharSequence[]{
+                "Yes", "No"
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(ProfileMainActivity.this);
+        builder.setTitle("Log Out??");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                //If admins press Yes
+                if (which == 0) {
+                    Toast.makeText(ProfileMainActivity.this, "Logged out Successfully", Toast.LENGTH_SHORT).show();
+                    FirebaseAuth.getInstance().signOut();
+                    finish();
+
+                    //unchecked the remember box
+/*                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("remember", "true");
+                    editor.apply();
+                    finish();*/
+
+                    Intent intent = new Intent(ProfileMainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                } else {
+
+                }
+            }
+        });
+        builder.show();
+
+
+        //startActivity(new Intent(this, LoginActivity.class));
+    }
+
+
+
 
     private void myorder() {
         Intent intent = new Intent(ProfileMainActivity.this, OrderActivity.class);
@@ -148,7 +212,7 @@ public class ProfileMainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void userInfoDisplay(String currentUserid) {
+/*    private void userInfoDisplay(String currentUserid) {
 
 
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("user");
@@ -172,7 +236,7 @@ public class ProfileMainActivity extends AppCompatActivity {
 
             }
         });
-    }
+    }*/
 
 /*    private void editProfile() {
         Intent intent = new Intent(ProfileMainActivity.this, UpdateProfileActivity.class);

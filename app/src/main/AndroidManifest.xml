@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
-        <activity android:name=".ProfileUserInfoActivity"></activity>
+        <activity android:name=".SuccessOrderActivity"></activity>
+        <activity android:name=".ProfileUserInfoActivity" />
         <activity android:name=".AddressActivity" />
         <activity android:name=".OrderReceiptDetailsActivity" />
         <activity android:name=".ProductPageActivity" />

@@ -66,6 +66,15 @@ public class ProductPageAdapter extends FirebaseRecyclerAdapter<Product, Product
 
         final  String postkey = getRef(position).getKey();
 
+        final String nameProduct = getItem(position).getName();
+        final String descriptionProduct = getItem(position).getDescription();
+        final String priceProduct = getItem(position).getPrice();
+        String IDProduct = getItem(position).getPid();
+        final String userIDFav = getItem(position).getUserid();
+        final String timeProduct = getItem(position).getTime();
+        final String dateProduct = getItem(position).getDate();
+        final String url = getItem(position).getImage();
+
         holder.itemName.setText(model.getName());
         Picasso.get().load(model.getImage()).into(holder.itemImg);
         holder.itemPrice.setText("RM " + model.getPrice());
@@ -75,8 +84,10 @@ public class ProductPageAdapter extends FirebaseRecyclerAdapter<Product, Product
             public void onClick(View view) {
                 // mcon.startActivity(new Intent(mcon, ProductDetailsActivity.class));
 
+                String getPID = model.getPid();
+
                 Intent intent = new Intent(view.getContext(), ProductDetailsActivity.class);
-                intent.putExtra("pid", model.getPid());
+                intent.putExtra("pid", getPID);
                 view.getContext().startActivity(intent);
             }
         });
@@ -88,8 +99,12 @@ public class ProductPageAdapter extends FirebaseRecyclerAdapter<Product, Product
                 fvrtChecker = true;
 
                 //String name =  username.getText().toString().trim();
-                final String name = holder.itemName.getText().toString().trim();
-                final String price = holder.itemPrice.getText().toString().trim();
+                //final String name = holder.itemName.getText().toString().trim();
+               // final String price = holder.itemPrice.getText().toString().trim();
+               // int img = Picasso.get().load(model.getImage()).into(holder.itemImg);
+
+                //final int img = holder.itemImg.setImageResource();
+
                 // mir code nie nk add data by time
                 // final String time =
                 //nie image
@@ -108,12 +123,21 @@ public class ProductPageAdapter extends FirebaseRecyclerAdapter<Product, Product
                                 fvrtChecker = false;
                             }else {
 
-                                favouriteRef.child(postkey).child(currentUserid).setValue(true);
-                                favourite.setFav_title(name);
-                                favourite.setFav_price(price);
+                                favouriteRef = db.getReference("Favourites").child(currentUserid);
+                                //favouriteRef.child(postkey).child(currentUserid).setValue(true);
+                                favourite.setFav_title(nameProduct);
+                                favourite.setFav_price(priceProduct);
                                 favourite.setFav_id(postkey);
+                                favourite.setFav_date(dateProduct);
+                                favourite.setUserid(userIDFav);
+                                favourite.setFav_time(timeProduct);
+                                favourite.setFav_description(descriptionProduct);
+                                //favourite.setFav_img();
+                                favourite.setFav_img(url);
+                                //favourite.setFav_img(String.valueOf(holder.itemImg));
                                 //  String id = fvrt_listRef.push().getKey();
-                                fvrt_listRef.child(postkey).setValue(favourite);
+                                favouriteRef.child(postkey).setValue(favourite);
+                                //fvrt_listRef.child(postkey).setValue(favourite);
                                 fvrtChecker = false;
 
                                 Toast.makeText(view.getContext(), "Added to favourite", Toast.LENGTH_SHORT).show();
@@ -127,18 +151,9 @@ public class ProductPageAdapter extends FirebaseRecyclerAdapter<Product, Product
 
                     }
                 });
-
-
-
-
             }
         });
 
-
-
-    }
-
-    private void addToCartList() {
 
 
     }
@@ -164,8 +179,9 @@ public class ProductPageAdapter extends FirebaseRecyclerAdapter<Product, Product
 
 
 
-            favouriteRef = db.getReference("Products").child(currentUserid).child("User View").child("favourites");
-            fvrt_listRef = db.getReference("Products").child(currentUserid).child("User View").child("favourites").child("favourite_list");
+            //favouriteRef = db.getReference("favourites").child(currentUserid).child("User View").child("favourites");
+            favouriteRef = db.getReference("Favourites").child(currentUserid);
+            fvrt_listRef = db.getReference("favourites").child(currentUserid).child("User View").child("favourites").child("favourite_list");
             itemName = itemView.findViewById(R.id.productitem_name);
             itemPrice = itemView.findViewById(R.id.productitem_price);
             itemImg = itemView.findViewById(R.id.productitem_image);
@@ -178,7 +194,8 @@ public class ProductPageAdapter extends FirebaseRecyclerAdapter<Product, Product
        public void favouriteChecker(final String postkey){
            favBtn = itemView.findViewById(R.id.favourite_btn);
 
-           favouriteRef = db.getReference("favourites");
+           //favouriteRef = db.getReference("Products").child(currentUserid).child("User View").child("favourites");
+           favouriteRef = db.getReference("Favourites").child(currentUserid);
            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
            final String uid = user.getUid();
 

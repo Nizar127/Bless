@@ -6,11 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".OrderActivity">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+       >
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_order_receipt"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/candyapple">
 
         <ImageView
             android:id="@+id/back_btn_order_receipt"
@@ -35,22 +41,30 @@
             android:textColor="@color/White"
             android:textSize="25sp"/>
 
+    </LinearLayout>
+
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@+id/linear_layout_order_receipt"
-            app:layout_constraintBottom_toTopOf="@+id/bot_nav_order" />
+            android:layout_below="@+id/linear_layout_order_receipt"
+            android:layout_above="@+id/bot_nav_order"/>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bot_nav_order"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/GhostWhite"
-            app:itemBackground="@color/GhostWhite"
             app:menu="@menu/bottom_order"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            android:layout_gravity="bottom"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorGreyBackground"
+            app:itemTextColor="@color/candyapple"
+            app:itemIconTint="@color/candyapple"
+            app:itemIconSize="20dp"
+            />
 
-    </LinearLayout>
+
+
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -92,6 +92,7 @@ public class CartActivity extends AppCompatActivity {
         final String uid = user.getUid();
 
         cartCheckRef = FirebaseDatabase.getInstance().getReference()
+                .child("Orders")
                 .child("Cart List")
                 .child("User View")
                 .child(uid);
@@ -129,6 +130,7 @@ public class CartActivity extends AppCompatActivity {
         final String uid = user.getUid();
 
         final DatabaseReference totalRef = FirebaseDatabase.getInstance().getReference()
+                .child("Orders")
                 .child("Cart List")
                 .child("User View")
                 .child(uid)
@@ -166,8 +168,7 @@ public class CartActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         final String uid = user.getUid();
 
-        final DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
-
+        final DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Orders").child("Cart List");
         FirebaseRecyclerOptions<Cart> options =
                 new FirebaseRecyclerOptions.Builder<Cart>()
                 .setQuery(cartListRef.child("User View")

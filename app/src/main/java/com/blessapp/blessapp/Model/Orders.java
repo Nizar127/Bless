@@ -2,18 +2,20 @@ package com.blessapp.blessapp.Model;
 
 public class Orders {
 
-    String name, username, phone, houseNo, address, postcode, state, sent, received, date, time, totalAmount;
+    private String name, username, phone, houseNo, street, houseArea, city, postcode, state, sent, received, date, time, totalAmount;
 
     public Orders(){
 
     }
 
-    public Orders(String name, String username, String phone, String houseNo, String address, String postcode, String state, String sent, String received, String date, String time, String totalAmount) {
+    public Orders(String name, String username, String phone, String houseNo, String street, String houseArea, String city, String postcode, String state, String sent, String received, String date, String time, String totalAmount) {
         this.name = name;
         this.username = username;
         this.phone = phone;
         this.houseNo = houseNo;
-        this.address = address;
+        this.street = street;
+        this.houseArea = houseArea;
+        this.city = city;
         this.postcode = postcode;
         this.state = state;
         this.sent = sent;
@@ -55,12 +57,28 @@ public class Orders {
         this.houseNo = houseNo;
     }
 
-    public String getAddress() {
-        return address;
+    public String getStreet() {
+        return street;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getHouseArea() {
+        return houseArea;
+    }
+
+    public void setHouseArea(String houseArea) {
+        this.houseArea = houseArea;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getPostcode() {

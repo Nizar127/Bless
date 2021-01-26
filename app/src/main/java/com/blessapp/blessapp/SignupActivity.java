@@ -64,405 +64,124 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void RegisterNewUser() {
-
         // show the visibility of progress bar to show loading
         progressBar.setVisibility(View.VISIBLE);
-
-        // Take the value of two edit texts in Strings
-        String email, password;
-        email = uname.getText().toString();
-        password = pass.getText().toString();
-
-        // Validations for input email and password
-        if (TextUtils.isEmpty(email)) {
-            Toast.makeText(getApplicationContext(),
-                    "Please enter email",
-                    Toast.LENGTH_LONG)
-                    .show();
-            return;
-        }
-        if (TextUtils.isEmpty(password)) {
-            Toast.makeText(getApplicationContext(),
-                    "Please enter password",
-                    Toast.LENGTH_LONG)
-                    .show();
-            return;
-        }
-
-        mAuth
-                .createUserWithEmailAndPassword(email,password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(),
-                                    "Registration successful!",
-                                    Toast.LENGTH_LONG)
-                                    .show();
-                            CreateAccount(mAuth.getCurrentUser().getUid());
-
-                            // hide the progress bar
-                            progressBar.setVisibility(View.GONE);
-
-                            // if the user created intent to login activity
-
-
-                   /* Intent intent
-                            = new Intent(SignupActivity.this,
-                            ProductPageActivity.class);
-                    startActivity(intent);*/
-                        }
-                        else {
-
-                            // Registration failed
-                            Toast.makeText(
-                                    getApplicationContext(),
-                                    "Registration failed!!"
-                                            + " Please try again later",
-                                    Toast.LENGTH_LONG)
-                                    .show();
-
-                            // hide the progress bar
-                            progressBar.setVisibility(View.GONE);
-                        }
-                    }
-                });
+        CreateAccount();
     }
+    private void CreateAccount() {
 
-    private void CreateAccount(String uid) {
-
-        //String uid = FirebaseAuth.getInstance().getUid();
         //uid = FirebaseDatabase.getInstance().getReference().getKey();
-        String name =  emailID.getText().toString().trim();
-        String password = pass.getText().toString().trim();
-        String phone = phoneNum.getText().toString().trim();
-        String birthdate = birth.getText().toString().trim();
-        String image = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl().toString();
-        //String birthdate =
+        final String email = emailID.getText().toString().trim();
+        final String username = uname.getText().toString().trim();
+        final String password = pass.getText().toString().trim();
+        final String phone = phoneNum.getText().toString().trim();
+        final String birthdate = birth.getText().toString().trim();
         int passLength = password.length();
 
-        if (TextUtils.isEmpty(name)){
+        if (TextUtils.isEmpty(email)) {
+            Toast.makeText(this, "Please enter your email.", Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(username)) {
             Toast.makeText(this, "Please enter your name.", Toast.LENGTH_SHORT).show();
-        }
-
-        else if (TextUtils.isEmpty(phone)){
-            Toast.makeText(this, "Please enter your phone number.", Toast.LENGTH_SHORT).show();
-        }
-
-        else if (TextUtils.isEmpty(password)){
+        } else if (TextUtils.isEmpty(password)) {
             Toast.makeText(this, "Please enter your password.", Toast.LENGTH_SHORT).show();
-        }
-
-        else if (TextUtils.isEmpty(birthdate)){
+        } else if (TextUtils.isEmpty(phone)) {
+            Toast.makeText(this, "Please enter your phone number.", Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(birthdate)) {
             Toast.makeText(this, "Please enter your birth date.", Toast.LENGTH_SHORT).show();
+        } else {
+
+            mAuth
+                    .createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(getApplicationContext(),
+                                        "Email authentication successful, proceeding to create profile...",
+                                        Toast.LENGTH_LONG)
+                                        .show();
+
+                                loadingBar.setTitle("Create Account");
+                                loadingBar.setMessage("Checking the credentials...");
+                                loadingBar.setCanceledOnTouchOutside(false);
+                                loadingBar.show();
+
+                                ValidatePhoneNumber(mAuth.getCurrentUser().getUid(), email, username, phone, birthdate, password);
+                                // hide the progress bar
+                                progressBar.setVisibility(View.GONE);
+                            } else {
+                                // Registration failed
+                                Toast.makeText(
+                                        getApplicationContext(),
+                                        "Registration failed!!" + " Please try again later. Error : " + task.getException().toString(),
+                                        Toast.LENGTH_LONG)
+                                        .show();
+
+                                // hide the progress bar
+                                progressBar.setVisibility(View.GONE);
+                            }
+                        }
+                    });
+
         }
-
-
-        else{
-            loadingBar.setTitle("Create Account");
-            loadingBar.setMessage("Checking the credentials...");
-            loadingBar.setCanceledOnTouchOutside(false);
-            loadingBar.show();
-
-            ValidatePhoneNumber(uid, name, phone, birthdate, password, image);
-        }
-
     }
 
-    private void ValidatePhoneNumber(final String uid, final String name, final String phone, final String birthdate, final String password, final String image) {
-        final DatabaseReference rootRef;
-        rootRef = FirebaseDatabase.getInstance().getReference();
+        private void ValidatePhoneNumber(final String uid, final String email, final String username, final String phone, final String birthdate, final String password) {
+            final DatabaseReference rootRef;
+            rootRef = FirebaseDatabase.getInstance().getReference();
 
-        rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                if (!(dataSnapshot.child("Users").child(uid).exists())){
+                    if (!(dataSnapshot.child("Users").child(uid).exists())){
 
-                    HashMap<String, Object> userdataMap = new HashMap<>();
+                        HashMap<String, Object> userdataMap = new HashMap<>();
 
-                    userdataMap.put("email", name);
-                    userdataMap.put("fullname", name);
-                    userdataMap.put("image", image);
-                    userdataMap.put("phone", phone);
-                    userdataMap.put("password", password);
-                    userdataMap.put("birthdate",birthdate);
+                        userdataMap.put("userID", uid);
+                        userdataMap.put("email", email);
+                        userdataMap.put("fullname", username);
+                        userdataMap.put("phone", phone);
+                        userdataMap.put("password", password);
+                        userdataMap.put("birthdate",birthdate);
 
-                    //.child("Users") - create new child/table in db with "Users" as name
-                    //.child(name) - create a child under Users child/table in db with named after user's name number
-                    rootRef.child("Users").child(name).updateChildren(userdataMap)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()){
-                                        Toast.makeText(SignupActivity.this, "Account Created!" + name, Toast.LENGTH_SHORT).show();
-                                        loadingBar.dismiss();
+                        //.child("Users") - create new child/table in db with "Users" as name
+                        //.child(name) - create a child under Users child/table in db with named after user's name number
+                        rootRef.child("Users").child(uid).updateChildren(userdataMap)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()){
+                                            Toast.makeText(SignupActivity.this, "Account Created!" + name, Toast.LENGTH_SHORT).show();
+                                            loadingBar.dismiss();
 
-                                        Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
-                                        startActivity(intent);
+                                            Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+                                            startActivity(intent);
+                                        }
+
+                                        else {
+                                            loadingBar.dismiss();
+                                            Toast.makeText(SignupActivity.this, "We're sorry, Something happen, please try again.", Toast.LENGTH_SHORT).show();
+                                        }
                                     }
-
-                                    else {
-                                        loadingBar.dismiss();
-                                        Toast.makeText(SignupActivity.this, "We're sorry, Something happen, please try again.", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-                }
-                else{
-                    Toast.makeText(SignupActivity.this, "This username already exists.", Toast.LENGTH_SHORT).show();
-                    loadingBar.dismiss();
-                    Toast.makeText(SignupActivity.this, "Please use other username.", Toast.LENGTH_SHORT).show();
+                                });
+                    }
+                    else{
+                        Toast.makeText(SignupActivity.this, "This username already exists.", Toast.LENGTH_SHORT).show();
+                        loadingBar.dismiss();
+                        Toast.makeText(SignupActivity.this, "Please use other username.", Toast.LENGTH_SHORT).show();
 
                     /*
                     Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                     startActivity(intent);
                     */
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-  /*  private void RegisterNewUser() {
-
-        // show the visibility of progress bar to show loading
-        progressBar.setVisibility(View.VISIBLE);
-
-        // Take the value of two edit texts in Strings
-        //String email, password;
-        final String email = emailID.getText().toString();
-        final String password = pass.getText().toString();
-        final String username = uname.getText().toString();
-        final String phone =  phoneNum.getText().toString();
-        final String birthdate = birth.getText().toString();
-
-        if (TextUtils.isEmpty(email)){
-            Toast.makeText(this, "Please enter your email", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        else if (TextUtils.isEmpty(phone)){
-            Toast.makeText(this, "Please enter your phone number.", Toast.LENGTH_SHORT).show();
-        }
-
-        else if (TextUtils.isEmpty(password)){
-            Toast.makeText(this, "Please enter your password.", Toast.LENGTH_SHORT).show();
-        }
-
-        else if (TextUtils.isEmpty(birthdate)){
-            Toast.makeText(this, "Please enter your birth date.", Toast.LENGTH_SHORT).show();
-        }
-
-
-        else {
-            loadingBar.setTitle("Create Account");
-            loadingBar.setMessage("Checking the credentials...");
-            loadingBar.setCanceledOnTouchOutside(false);
-            loadingBar.show();
-        }
-
-        Query queryUsername = FirebaseDatabase.getInstance().getReference().child("Users").orderByChild("username").equalTo(username);
-        queryUsername.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.getChildrenCount()>0){
-                Toast.makeText(SignupActivity.this,"Choose different username", Toast.LENGTH_SHORT).show();
-            } else{
-                mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(SignupActivity.this,  new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(!task.isSuccessful()){
-                            Toast.makeText(SignupActivity.this,"Sign up error", Toast.LENGTH_SHORT).show();
-                        }
-                        else{
-                            String user_id = mAuth.getCurrentUser().getUid();
-                            final DatabaseReference current_user_db = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id);
-
-                            final String userEmail = emailID.getText().toString();
-                            //final String userPass = pass.getText().toString();
-                            final String userwithName = uname.getText().toString();
-                            final String phone = phoneNum.getText().toString();
-                            final String birthday = birth.getText().toString();
-
-                            Map userData = new HashMap();
-                            userData.put("email", userEmail);
-                            userData.put("username", userwithName);
-                            userData.put("phone", phone);
-                            userData.put("birthday",birthday);
-
-                            current_user_db.setValue(userData);
-
-                            loadingBar.dismiss();
-                            progressBar.setVisibility(View.GONE);
-                            Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
-                            startActivity(intent);
-
-
-
-                        }
                     }
-                });
-            }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });*/
-
-        // Validations for input email and password
-/*        if (TextUtils.isEmpty(email)) {
-            Toast.makeText(getApplicationContext(),
-                    "Please enter email",
-                    Toast.LENGTH_LONG)
-                    .show();
-            return;
-        }
-        if (TextUtils.isEmpty(password)) {
-            Toast.makeText(getApplicationContext(),
-                    "Please enter password",
-                    Toast.LENGTH_LONG)
-                    .show();
-            return;
-        }
-
-        mAuth
-                .createUserWithEmailAndPassword(email,password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "Registration successful!", Toast.LENGTH_LONG).show();
-                    //CreateAccount(mAuth.getCurrentUser().getUid());
-
-                    // hide the progress bar
-                    progressBar.setVisibility(View.GONE);
-
-                    // if the user created intent to login activity
-
-
-                   *//* Intent intent
-                            = new Intent(SignupActivity.this,
-                            ProductPageActivity.class);
-                    startActivity(intent);*//*
                 }
-                else {
 
-                    // Registration failed
-                    Toast.makeText(
-                            getApplicationContext(),
-                            "Registration failed!!"
-                                    + " Please try again later",
-                            Toast.LENGTH_LONG)
-                            .show();
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    // hide the progress bar
-                    progressBar.setVisibility(View.GONE);
                 }
-            }
-        });*/
-
-   // }
-
-/*    private void CreateAccount(String uid) {
-
-        //String name =  username.getText().toString().trim();
-        String password = pass.getText().toString().trim();
-        String phone = phoneNum.getText().toString().trim();
-        String birthdate = birth.getText().toString().trim();
-        //String birthdate =
-        int passLength = password.length();
-
-        if (TextUtils.isEmpty(name)){
-            Toast.makeText(this, "Please enter your name.", Toast.LENGTH_SHORT).show();
+            });
         }
-
-        else if (TextUtils.isEmpty(phone)){
-            Toast.makeText(this, "Please enter your phone number.", Toast.LENGTH_SHORT).show();
-        }
-
-        else if (TextUtils.isEmpty(password)){
-            Toast.makeText(this, "Please enter your password.", Toast.LENGTH_SHORT).show();
-        }
-
-        else if (TextUtils.isEmpty(birthdate)){
-            Toast.makeText(this, "Please enter your birth date.", Toast.LENGTH_SHORT).show();
-        }
-        
-
-        else{
-            loadingBar.setTitle("Create Account");
-            loadingBar.setMessage("Checking the credentials...");
-            loadingBar.setCanceledOnTouchOutside(false);
-            loadingBar.show();
-
-            ValidatePhoneNumber(uid, name, phone, birthdate, password);
-        }
-
-    }
-
-    private void ValidatePhoneNumber(final String uid, final String name, final String phone, final String birthdate, final String password) {
-        final DatabaseReference rootRef;
-        rootRef = FirebaseDatabase.getInstance().getReference();
-
-        rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                if (!(dataSnapshot.child("Users").child(uid).exists())){
-
-                    HashMap<String, Object> userdataMap = new HashMap<>();
-
-                    userdataMap.put("uid", uid);
-                    userdataMap.put("email", name);
-                    userdataMap.put("fullname", name);
-                    userdataMap.put("phone", phone);
-                    userdataMap.put("password", password);
-                    userdataMap.put("birthdate",birthdate);
-
-                    //.child("Users") - create new child/table in db with "Users" as name
-                    //.child(name) - create a child under Users child/table in db with named after user's name number
-                    rootRef.child("Users").child(uid).updateChildren(userdataMap)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()){
-                                        Toast.makeText(SignupActivity.this, "Account Created!" + name, Toast.LENGTH_SHORT).show();
-                                        loadingBar.dismiss();
-
-                                        Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
-                                        startActivity(intent);
-                                    }
-
-                                    else {
-                                        loadingBar.dismiss();
-                                        Toast.makeText(SignupActivity.this, "We're sorry, Something happen, please try again.", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-                }
-                else{
-                    Toast.makeText(SignupActivity.this, "This username already exists.", Toast.LENGTH_SHORT).show();
-                    loadingBar.dismiss();
-                    Toast.makeText(SignupActivity.this, "Please use other username.", Toast.LENGTH_SHORT).show();
-
-                    *//*
-                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    *//*
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }*/
 }

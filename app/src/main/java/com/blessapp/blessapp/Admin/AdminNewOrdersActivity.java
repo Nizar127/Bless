@@ -15,23 +15,27 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.blessapp.blessapp.Model.Orders;
+import com.blessapp.blessapp.Model.Product;
 import com.blessapp.blessapp.R;
 import com.blessapp.blessapp.ViewHolder.OrdersViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DecimalFormat;
+import java.util.HashMap;
 
 public class AdminNewOrdersActivity extends AppCompatActivity {
 
     private RecyclerView ordersList;
-    private DatabaseReference ordersRef;
+    //private DatabaseReference ordersRef;
     //To round up to 2 dec place
     DecimalFormat df = new DecimalFormat("#.00");
-    private float totalPrice;
+    private float Price ;
     private String userNameAsKey;
+    Product product;
 
     private ImageView backBtn;
 
@@ -40,7 +44,14 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_new_orders);
 
-        ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders");
+        //product = new Product();
+
+        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+
+        //ordersRef = FirebaseDatabase.getInstance().getReference("Orders");
+        //ordersRef = FirebaseDatabase.getInstance().getReference("Orders").child(userID).child("pid");
+
 
         ordersList = findViewById(R.id.orderadminRecycler);
         ordersList.setLayoutManager(new LinearLayoutManager(this));
@@ -59,9 +70,11 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        final DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders");
+
         FirebaseRecyclerOptions<Orders> options =
                 new FirebaseRecyclerOptions.Builder<Orders>()
-                .setQuery(ordersRef, Orders.class)
+                .setQuery(ordersRef.child("pid"), Orders.class)
                 .build();
 
         FirebaseRecyclerAdapter<Orders, OrdersViewHolder> adapter =
@@ -69,12 +82,12 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
                     @Override
                     protected void onBindViewHolder(@NonNull OrdersViewHolder holder, final int position, @NonNull Orders model) {
                         //To make sure they display the decimal places
-                        totalPrice = Float.valueOf(model.getTotalAmount());
+                        Price = Float.valueOf(model.getTotalAmount());
                         userNameAsKey = model.getUsername();
 
                         holder.name.setText("Name : " + model.getName());
                         holder.phone.setText("Phone Number : " + model.getPhone());
-                        holder.totalPrice.setText("Total : RM " + df.format(totalPrice));
+                        holder.totalPrice.setText("Total : RM " + df.format(Price));
                         holder.dateTime.setText("Date & Time Ordered : " + model.getDate() + ", " + model.getTime());
 
                         holder.details.setOnClickListener(new View.OnClickListener() {
@@ -133,5 +146,27 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
     }
 
     private void RemoveOrder(String uID, String userNameAsKey) {
+
+        final DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders");
+
+        ordersRef.child(uID).removeValue();
+
+        DatabaseReference orderReceipt = FirebaseDatabase.getInstance().getReference()
+                .child("Users")
+                .child(userNameAsKey)
+                .child("orderReceipt")
+                .child(uID);
+
+        HashMap<String, Object> orderReceiptMap = new HashMap<>();
+
+        orderReceiptMap.put("sent", "Delivered");
+
+        orderReceipt.updateChildren(orderReceiptMap);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(AdminNewOrdersActivity.this, AdminProductManageActivity.class);
+        startActivity(intent);
     }
 }

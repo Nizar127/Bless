@@ -1,9 +1,12 @@
 package com.blessapp.blessapp;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
@@ -19,6 +22,8 @@ import android.widget.Toast;
 
 import com.blessapp.blessapp.Admin.AdminAuthenticationActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,13 +35,28 @@ public class LoginActivity extends AppCompatActivity {
     EditText username, pass;
     FirebaseAuth mAuth;
     ProgressBar progressBar;
-    CheckBox remember, showpass;
+    CheckBox  showpass;
     TextView forgotPass, adminLogin;
+    FirebaseAuth.AuthStateListener mAuthstate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+/*
+        SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+        String checkbox = preferences.getString("remember", "");
+
+        if(checkbox.equals("true")){
+            Intent intent = new Intent(LoginActivity.this, ProductPageActivity.class);
+            startActivity(intent);
+        } else if(checkbox.equals("false")){
+            Toast.makeText(this, "Please Sign In", Toast.LENGTH_SHORT).show();
+        }
+*/
+
+
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -44,10 +64,30 @@ public class LoginActivity extends AppCompatActivity {
         username = findViewById(R.id.login_username_input);
         pass = findViewById(R.id.login_password_input);
         progressBar = findViewById(R.id.progressbar);
-        remember = findViewById(R.id.remember_me);
+//        remember = findViewById(R.id.remember_me);
         showpass = findViewById(R.id.login_checkbox);
         forgotPass = findViewById(R.id.forget_password_link);
         adminLogin = findViewById(R.id.admin_login_btn);
+
+/*        remember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(compoundButton.isChecked()){
+                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("remember", "true");
+                    editor.apply();
+                    Toast.makeText(LoginActivity.this, "Checked", Toast.LENGTH_SHORT).show();
+                } else if(!compoundButton.isChecked()){
+                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("remember", "true");
+                    editor.apply();
+                    Toast.makeText(LoginActivity.this, "UnChecked", Toast.LENGTH_SHORT).show();
+                }
+            }
+        })*/;
+
 
 
         //admin login
@@ -72,6 +112,52 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        forgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final EditText resetMail = new EditText(v.getContext());
+                AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(v.getContext());
+                passwordResetDialog.setTitle("Reset Password");
+                passwordResetDialog.setMessage("Enter Your Email To Received Reset Link");
+                passwordResetDialog.setView(resetMail);
+
+                passwordResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+
+                passwordResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        String mail = resetMail.getText().toString();
+                        mAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(LoginActivity.this, "Reset Link Sent To Your Email", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(LoginActivity.this, "Error! Reset Link Is No Sent", Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
+                    }
+                });
+
+                passwordResetDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+
+                passwordResetDialog.create().show();
+            }
+        });
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override

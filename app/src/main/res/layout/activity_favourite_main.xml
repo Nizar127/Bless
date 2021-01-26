@@ -12,7 +12,7 @@
         android:background="@color/splashname">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_productpage"
+            android:id="@+id/toolbar_favouritepage"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/candyapple">
@@ -38,7 +38,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Favourite"
-                        android:layout_toEndOf="@+id/back_btn_productArrow"
+                        android:layout_toEndOf="@+id/back_btn_favouriteArrow"
                         android:layout_toRightOf="@+id/update_account_settings_btn"
                         android:layout_marginStart="30dp"
                         android:layout_marginTop="10dp"
@@ -73,6 +73,23 @@
 
         </androidx.appcompat.widget.Toolbar>
 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/toolbar_favouritepage"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="My Favourite"
+        android:textColor="@color/GhostWhite"
+        android:textStyle="bold"
+        android:fontFamily="@font/audiowide"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="20dp"
+        android:textSize="25sp"/>
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -85,6 +102,9 @@
 
 
         </androidx.recyclerview.widget.RecyclerView>
+
+
+</LinearLayout>
 
 
     </RelativeLayout>

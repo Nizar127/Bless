@@ -96,7 +96,7 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="30dp">
 
-                <CheckBox
+             <!--   <CheckBox
                     android:id="@+id/remember_me"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -106,7 +106,7 @@
                     android:textStyle="bold"
                     android:textSize="17sp"
                     android:layout_marginLeft="10dp"
-                    android:gravity="center_vertical"/>
+                    android:gravity="center_vertical"/>-->
 
                 <TextView
                     android:id="@+id/forget_password_link"

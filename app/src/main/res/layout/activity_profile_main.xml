@@ -101,7 +101,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="268dp"
+            android:layout_height="400dp"
             android:layout_below="@+id/imageview"
             android:layout_marginTop="10dp"
             android:orientation="vertical"
@@ -134,6 +134,8 @@
                     android:textStyle="bold" />
 
             </LinearLayout>
+
+
 
 
             <LinearLayout
@@ -191,6 +193,38 @@
                     android:textStyle="bold" />
 
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/userprofilelogout"
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:elevation="20dp"
+                android:orientation="horizontal"
+                android:paddingStart="50dp"
+                android:paddingTop="30dp"
+                android:paddingBottom="20dp">
+
+                <ImageView
+                    android:layout_width="41dp"
+                    android:layout_height="38dp"
+                    android:src="@drawable/logout" />
+
+                <TextView
+                    android:layout_width="173dp"
+                    android:layout_height="33dp"
+                    android:layout_marginStart="30dp"
+                    android:fontFamily="@font/audiowide"
+                    android:gravity="center"
+                    android:text="Logout"
+                    android:textColor="@color/Black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+
+
 
         </LinearLayout>
 

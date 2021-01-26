@@ -81,11 +81,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/Blue"
             android:text="Edit/Remove Products"
             android:textColor="@color/White"
             android:textSize="20sp"
             android:textAllCaps="false"
+            android:fontFamily="@font/audiowide"
            android:layout_alignParentBottom="true"/>
 
 

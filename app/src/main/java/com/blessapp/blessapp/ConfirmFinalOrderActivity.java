@@ -297,7 +297,7 @@ public class ConfirmFinalOrderActivity extends AppCompatActivity {
                                         if (task.isSuccessful()){
                                             Toast.makeText(ConfirmFinalOrderActivity.this, "Thank you, your order currently being prepared.", Toast.LENGTH_SHORT).show();
 
-                                            Intent intent = new Intent(ConfirmFinalOrderActivity.this, ProductPageActivity.class);
+                                            Intent intent = new Intent(ConfirmFinalOrderActivity.this, SuccessOrderActivity.class);
                                             startActivity(intent);
                                         }
                                     }

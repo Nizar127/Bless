@@ -75,6 +75,7 @@ public class ProductPageAdapter extends FirebaseRecyclerAdapter<Product, Product
         final String dateProduct = getItem(position).getDate();
         final String url = getItem(position).getImage();
 
+        //first binding of product
         holder.itemName.setText(model.getName());
         Picasso.get().load(model.getImage()).into(holder.itemImg);
         holder.itemPrice.setText("RM " + model.getPrice());
@@ -82,7 +83,7 @@ public class ProductPageAdapter extends FirebaseRecyclerAdapter<Product, Product
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // mcon.startActivity(new Intent(mcon, ProductDetailsActivity.class));
+
 
                 String getPID = model.getPid();
 
@@ -93,22 +94,12 @@ public class ProductPageAdapter extends FirebaseRecyclerAdapter<Product, Product
         });
 
 
+        //wishlist functionality
         holder.favBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
                 fvrtChecker = true;
 
-                //String name =  username.getText().toString().trim();
-                //final String name = holder.itemName.getText().toString().trim();
-               // final String price = holder.itemPrice.getText().toString().trim();
-               // int img = Picasso.get().load(model.getImage()).into(holder.itemImg);
-
-                //final int img = holder.itemImg.setImageResource();
-
-                // mir code nie nk add data by time
-                // final String time =
-                //nie image
-               // final String image = Picasso.get().load(model.getImage()).into(holder.itemImg);
 
 
                 holder.favouriteChecker(postkey);
@@ -124,7 +115,7 @@ public class ProductPageAdapter extends FirebaseRecyclerAdapter<Product, Product
                             }else {
 
                                 favouriteRef = db.getReference("Favourites").child(currentUserid);
-                                //favouriteRef.child(postkey).child(currentUserid).setValue(true);
+
                                 favourite.setFav_title(nameProduct);
                                 favourite.setFav_price(priceProduct);
                                 favourite.setFav_id(postkey);
@@ -132,9 +123,9 @@ public class ProductPageAdapter extends FirebaseRecyclerAdapter<Product, Product
                                 favourite.setUserid(userIDFav);
                                 favourite.setFav_time(timeProduct);
                                 favourite.setFav_description(descriptionProduct);
-                                //favourite.setFav_img();
+
                                 favourite.setFav_img(url);
-                                //favourite.setFav_img(String.valueOf(holder.itemImg));
+
                                 //  String id = fvrt_listRef.push().getKey();
                                 favouriteRef.child(postkey).setValue(favourite);
                                 //fvrt_listRef.child(postkey).setValue(favourite);
@@ -179,22 +170,19 @@ public class ProductPageAdapter extends FirebaseRecyclerAdapter<Product, Product
 
 
 
-            //favouriteRef = db.getReference("favourites").child(currentUserid).child("User View").child("favourites");
             favouriteRef = db.getReference("Favourites").child(currentUserid);
             fvrt_listRef = db.getReference("favourites").child(currentUserid).child("User View").child("favourites").child("favourite_list");
             itemName = itemView.findViewById(R.id.productitem_name);
             itemPrice = itemView.findViewById(R.id.productitem_price);
             itemImg = itemView.findViewById(R.id.productitem_image);
-            //cartBtn = itemView.findViewById(R.id.add_to_cart_order_btn);
             favBtn = itemView.findViewById(R.id.favourite_btn);
 
 
         }
-
+        //to set image of the favourite icon
        public void favouriteChecker(final String postkey){
            favBtn = itemView.findViewById(R.id.favourite_btn);
 
-           //favouriteRef = db.getReference("Products").child(currentUserid).child("User View").child("favourites");
            favouriteRef = db.getReference("Favourites").child(currentUserid);
            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
            final String uid = user.getUid();

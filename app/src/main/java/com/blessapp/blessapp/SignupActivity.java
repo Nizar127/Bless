@@ -90,6 +90,7 @@ public class SignupActivity extends AppCompatActivity {
             Toast.makeText(this, "Please enter your birth date.", Toast.LENGTH_SHORT).show();
         } else {
 
+
             mAuth
                     .createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -127,7 +128,8 @@ public class SignupActivity extends AppCompatActivity {
     }
 
         private void ValidatePhoneNumber(final String uid, final String email, final String username, final String phone, final String birthdate, final String password) {
-            final DatabaseReference rootRef;
+        //initialize realtime database
+        final DatabaseReference rootRef;
             rootRef = FirebaseDatabase.getInstance().getReference();
 
             rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -171,10 +173,7 @@ public class SignupActivity extends AppCompatActivity {
                         loadingBar.dismiss();
                         Toast.makeText(SignupActivity.this, "Please use other username.", Toast.LENGTH_SHORT).show();
 
-                    /*
-                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    */
+
                     }
                 }
 

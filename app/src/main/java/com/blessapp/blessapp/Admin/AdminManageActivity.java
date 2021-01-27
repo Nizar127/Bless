@@ -23,6 +23,7 @@ public class AdminManageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_manage);
 
+
         toolbar = findViewById(R.id.toolbar_adminmanagepage);
 
         backbtn = findViewById(R.id.back_btn_adminmanageArrow);
@@ -34,9 +35,12 @@ public class AdminManageActivity extends AppCompatActivity {
             }
         });
 
+        //initialize data by matching it with code in the layout
+
         additem = findViewById(R.id.addItem);
         manage_order = findViewById(R.id.manageOrder);
 
+        //set this view into setonclicklistener (to be clickable)
         additem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,6 +58,7 @@ public class AdminManageActivity extends AppCompatActivity {
         });
     }
 
+    //to go back
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(AdminManageActivity.this, LoginActivity.class);

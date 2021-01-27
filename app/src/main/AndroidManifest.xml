@@ -22,7 +22,6 @@
         <activity android:name=".ProductPageActivity" />
         <activity android:name=".FavouriteMainActivity" />
         <activity android:name=".ProfileMainActivity" />
-        <activity android:name=".ExploreMainActivity" />
         <activity android:name=".UpdateProfileActivity" />
         <activity android:name=".ConfirmFinalOrderActivity" />
         <activity android:name=".ProductDetailsActivity" />
@@ -34,7 +33,6 @@
         <activity android:name=".Admin.AdminNewOrdersActivity" />
         <activity android:name=".Admin.AdminOrderDetailsActivity" />
         <activity android:name=".Admin.AdminAddNewItemActivity" />
-        <activity android:name=".EditProfileActivity" />
         <activity android:name=".OrderActivity" />
         <activity android:name=".CartActivity" />
         <activity android:name=".SignupActivity" />

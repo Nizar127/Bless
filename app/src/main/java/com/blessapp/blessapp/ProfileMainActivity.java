@@ -72,11 +72,6 @@ public class ProfileMainActivity extends AppCompatActivity {
         orderlist = findViewById(R.id.userprofileorder);
         cartID = findViewById(R.id.cart_id);
         userImg = findViewById(R.id.userProfileImg);
-/*        emailInput = findViewById(R.id.emailName);
-        phoneNumber = findViewById(R.id.phoneNum);
-        birthdate = findViewById(R.id.birthdate);
-        editBtn = findViewById(R.id.editProfileBtn);*/
-        //address = findViewById(R.id.addressname);
 
         cartID.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,16 +109,6 @@ public class ProfileMainActivity extends AppCompatActivity {
         });
 
 
-
-//        editBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                editProfile();
-//            }
-//        });
-
-        //userInfoDisplay(currentUserid);
-
         mRef.child(currentUserid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -139,7 +124,6 @@ public class ProfileMainActivity extends AppCompatActivity {
 
                     username.setText(getUsername);
                     Picasso.get().load(userImage).into(userImg);
-                    //userImg.se
                 }
             }
 
@@ -151,6 +135,7 @@ public class ProfileMainActivity extends AppCompatActivity {
 
     }
 
+    //logout
     private void logout() {
 
         CharSequence options[] = new CharSequence[]{
@@ -169,12 +154,6 @@ public class ProfileMainActivity extends AppCompatActivity {
                     FirebaseAuth.getInstance().signOut();
                     finish();
 
-                    //unchecked the remember box
-/*                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("remember", "true");
-                    editor.apply();
-                    finish();*/
 
                     Intent intent = new Intent(ProfileMainActivity.this, LoginActivity.class);
                     startActivity(intent);
@@ -212,36 +191,6 @@ public class ProfileMainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-/*    private void userInfoDisplay(String currentUserid) {
-
-
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("user");
-        userRef.child(currentUserid).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
-                    Users user = dataSnapshot.getValue(Users.class);
-
-                    Picasso.get().load(user.getImage()).into(userImg);
-                    username.setText(user.getUsername());
-                    phoneNumber.setText(user.getPhone());
-                    emailInput.setText(user.getEmail());
-                    birthdate.setText(user.getBirthdate());
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }*/
-
-/*    private void editProfile() {
-        Intent intent = new Intent(ProfileMainActivity.this, UpdateProfileActivity.class);
-        startActivity(intent);
-    }*/
 
     @Override
     public void onBackPressed() {

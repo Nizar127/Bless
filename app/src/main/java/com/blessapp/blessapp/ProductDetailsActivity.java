@@ -56,19 +56,21 @@ public class ProductDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_details);
 
+        //to get the data from prodimage
         productID = getIntent().getStringExtra("pid");
 
         toolbar = findViewById(R.id.toolbar_itemproductdetails);
+
 
         expandableview = findViewById(R.id.expanded_suggestion);
         cardview = findViewById(R.id.cardview);
         suggestionView = findViewById(R.id.suggestion_wishes);
 
-        //descriptiontext = findViewById(R.id.description_text);
+
         addToCartBtn = findViewById(R.id.add_to_cart_btn);
         numberButton = findViewById(R.id.number_btn);
         prodImg = findViewById(R.id.product_image_detail);
-        prodName = findViewById(R.id.product_name_detail);
+        //prodName = findViewById(R.id.product_name_detail);
         prodDesc = findViewById(R.id.product_desc_detail);
         prodPrice = findViewById(R.id.product_price_detail);
 
@@ -82,10 +84,11 @@ public class ProductDetailsActivity extends AppCompatActivity {
         });
 
         getProductDetails();
-        //getProductDetails(productID);
-        prodImg.setImageResource(R.drawable.perfume);
-        //Picasso.get().load(R.drawable.perfume).into(prodImg);
 
+        //prodImg.setImageResource(R.drawable.perfume);
+
+
+        //this is for expandable layout
         suggestionView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,20 +106,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
        addToCartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
          public void onClick(View v) {
-
-               /* Intent intent = new Intent(ProductDetailsActivity.this, ExploreActivity.class);
-               startActivity(intent);
-*/
                addToCartList();
             }
         });
-
     }
-
- /*   private void orderList() {
-        Intent intent = new Intent(ProductDetailsActivity.this, ExploreActivity.class);
-        startActivity(intent);
-    }*/
 
     private void addToCartList() {
 
@@ -138,6 +131,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         String totalProdAmt = numberButton.getNumber();
         float sendTotalAmt = Float.valueOf(totalProdAmt) * Float.valueOf(productPrice);
 
+        //insert into firebase
         final HashMap<String, Object> cartMap = new HashMap<>();
         cartMap.put("pid", productID);
         cartMap.put("name", prodName.getText().toString());
@@ -164,13 +158,13 @@ public class ProductDetailsActivity extends AppCompatActivity {
                         }
                     }
                 });
-
     }
 
     private void getProductDetails() {
         DatabaseReference productsRef = FirebaseDatabase.getInstance().getReference("Products");
 
-       // productsRef.child(productID).addValueEventListener(new ValueEventListener()
+
+        //retrive data from firebase
         productsRef.child(productID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

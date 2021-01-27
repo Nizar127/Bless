@@ -120,10 +120,6 @@ public class AdminOrderDetailsActivity extends AppCompatActivity {
                     String streetDisplay = dataSnapshot.child("street").getValue().toString();
                     String houseAreaDisplay = dataSnapshot.child("houseArea").getValue().toString();
                     String cityDisplay = dataSnapshot.child("city").getValue().toString();
-                    /*
-                    String postcodeDisplay = dataSnapshot.child("postcode").getValue().toString();
-                    String stateDisplay = dataSnapshot.child("state").getValue().toString();
-                    */
 
                     orderDetailsAddress.setText("Address: " + houseNoDisplay + ", " + streetDisplay + ", " + houseAreaDisplay + ", " +
                             cityDisplay + ".");

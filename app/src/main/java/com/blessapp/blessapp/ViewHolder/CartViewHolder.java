@@ -11,7 +11,7 @@ import com.blessapp.blessapp.Interface.ItemClickListener;
 import com.blessapp.blessapp.R;
 
 public class CartViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
+//this is the recyclerview viewholder
     public ImageView prodImg;
     public TextView prodName, prodPrice, prodQuan;
     private ItemClickListener itemClickListener;

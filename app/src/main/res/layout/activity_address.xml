@@ -34,7 +34,7 @@
                         android:layout_height="match_parent">
 
                         <ImageView
-                            android:id="@+id/back_btn_productArrow"
+                            android:id="@+id/back_btn_addressArrow"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/ic_arrow_back_white_24dp" />
@@ -55,7 +55,7 @@
                             tools:ignore="RtlCompat" />
 
                         <Button
-                            android:id="@+id/update_account_settings_btn"
+                            android:id="@+id/update_account_address_btn"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_alignParentEnd="true"

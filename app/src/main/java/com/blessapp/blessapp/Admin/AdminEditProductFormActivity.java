@@ -160,3 +160,7 @@ public class AdminEditProductFormActivity extends AppCompatActivity {
         startActivity(intent);
     }
 }
+
+
+//this code is additional code for edit product data
+//but we only do work on add item only to cut time

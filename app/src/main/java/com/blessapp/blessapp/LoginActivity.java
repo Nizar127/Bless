@@ -44,20 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-/*
-        SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-        String checkbox = preferences.getString("remember", "");
-
-        if(checkbox.equals("true")){
-            Intent intent = new Intent(LoginActivity.this, ProductPageActivity.class);
-            startActivity(intent);
-        } else if(checkbox.equals("false")){
-            Toast.makeText(this, "Please Sign In", Toast.LENGTH_SHORT).show();
-        }
-*/
-
-
-
+        //initialize using firebase authentication
         mAuth = FirebaseAuth.getInstance();
 
         loginButton = findViewById(R.id.login_btn);
@@ -68,25 +55,6 @@ public class LoginActivity extends AppCompatActivity {
         showpass = findViewById(R.id.login_checkbox);
         forgotPass = findViewById(R.id.forget_password_link);
         adminLogin = findViewById(R.id.admin_login_btn);
-
-/*        remember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(compoundButton.isChecked()){
-                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("remember", "true");
-                    editor.apply();
-                    Toast.makeText(LoginActivity.this, "Checked", Toast.LENGTH_SHORT).show();
-                } else if(!compoundButton.isChecked()){
-                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("remember", "true");
-                    editor.apply();
-                    Toast.makeText(LoginActivity.this, "UnChecked", Toast.LENGTH_SHORT).show();
-                }
-            }
-        })*/;
 
 
 
@@ -154,6 +122,8 @@ public class LoginActivity extends AppCompatActivity {
 
                     }
                 });
+
+                //initiate the builder dialog
 
                 passwordResetDialog.create().show();
             }

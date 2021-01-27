@@ -123,7 +123,7 @@ public class CartActivity extends AppCompatActivity {
     private void displayMsg() {
         Toast.makeText(CartActivity.this, "No items in cart, please add at least 1 item.", Toast.LENGTH_SHORT).show();
     }
-
+//this code below is for calculate total prices
     private void calculateTotalPrices() {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();

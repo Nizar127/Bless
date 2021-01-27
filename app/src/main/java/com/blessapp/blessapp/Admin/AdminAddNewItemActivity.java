@@ -88,6 +88,9 @@ public class AdminAddNewItemActivity extends AppCompatActivity {
 
     }
 
+    //method to use crop image library
+    //required on onactivityresult
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -123,9 +126,11 @@ public class AdminAddNewItemActivity extends AppCompatActivity {
             Toast.makeText(this, "Product price required", Toast.LENGTH_SHORT).show();
         }
         else {
-            StoreProductInformation();
+            StoreProductInformation();  //<- called by method below
         }
     }
+
+    //store product information
 
     private void StoreProductInformation() {
 
@@ -145,6 +150,7 @@ public class AdminAddNewItemActivity extends AppCompatActivity {
         //To create a unique product random key, so that it doesn't overwrite other product
         productRandomKey = saveCurrentDate + saveCurrentTime;
 
+        //upload image to database
         final StorageReference filePath = prodImgRef.child(imgURL.getLastPathSegment() + productRandomKey + ".jpg");
 
         final UploadTask uploadTask = filePath.putFile(imgURL);
@@ -186,6 +192,8 @@ public class AdminAddNewItemActivity extends AppCompatActivity {
             }
         });
     }
+
+    //save item to database
 
     private void SaveProductInfoToDatabase() {
         HashMap<String, Object> productMap = new HashMap<>();

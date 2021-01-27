@@ -81,8 +81,6 @@ public class FavouriteMainActivity extends AppCompatActivity {
         // favrecyclerView.setHasFixedSize(true);
         favrecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-       // reference = database.getReference("favoriteList").child(currentUserid);
-
 
       FirebaseRecyclerOptions<Favourite> options =
               new FirebaseRecyclerOptions.Builder<Favourite>()

@@ -32,6 +32,7 @@ import com.squareup.picasso.Picasso;
 
 public class AdminEditProductActivity extends AppCompatActivity {
 
+
     private RecyclerView editProductsList;
     private DatabaseReference productsRef;
     private AutoCompleteTextView inputTextEditProd;
@@ -198,3 +199,8 @@ public class AdminEditProductActivity extends AppCompatActivity {
         startActivity(intent);
     }
 }
+
+
+
+//this code is additional code for edit product data
+//but we only do work on add item only to cut time

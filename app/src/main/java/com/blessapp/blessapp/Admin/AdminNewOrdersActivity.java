@@ -30,6 +30,7 @@ import java.util.HashMap;
 public class AdminNewOrdersActivity extends AppCompatActivity {
 
     private RecyclerView ordersList;
+    //to use Realtime Database :- need to use DatabaseReference as main reference
     private DatabaseReference ordersRef;
     //To round up to 2 dec place
     DecimalFormat df = new DecimalFormat("#.00");
@@ -44,16 +45,16 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_new_orders);
 
-        //product = new Product();
+        //initialize the database reference into instances
+        //.getReference() is the path of the database
+        //realtime database is unstructure NoSql database, so it have no entity - relationship
+        //it only have key value
+        //so in this case, getReference() is the main table and child its item
 
-        //String pid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        //String pid = String.valueOf(FirebaseDatabase.getInstance().getReference().child("Products").child("pid"));
-
-        //ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders").child("pid");
         ordersRef = FirebaseDatabase.getInstance().getReference("Orders");
-        //ordersRef = FirebaseDatabase.getInstance().getReference("Orders");
-        //ordersRef = FirebaseDatabase.getInstance().getReference("Orders").child(userID).child("pid");
 
+        //initialize the recyclerview need to have both instance initialize
+        //then setLayoutManager either in form linearlayour or gridlayout
 
         ordersList = findViewById(R.id.orderadminRecycler);
         ordersList.setLayoutManager(new LinearLayoutManager(this));
@@ -72,7 +73,12 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-
+        //this use firebaserecyclerUI in which it can connect direct with database and recyclerview
+        //this is the way to initialize FirebaserecyclerUI
+        //need ot have 2 - FirebaseRecyclerOptions and FirebaseRecyclerAdapter
+        //recyclerview need to have adapter or our controller, model and viewholder(view) just like MVC
+        //within firebaserecycleradapter have 3 main controller: onBindViewHolder, onCreateViewHolder and Viewholder
+        //viewholder can be external file or internal file
         FirebaseRecyclerOptions<Orders> options =
                 new FirebaseRecyclerOptions.Builder<Orders>()
                 .setQuery(ordersRef.child("pid"), Orders.class)
@@ -81,6 +87,9 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
         FirebaseRecyclerAdapter<Orders, OrdersViewHolder> adapter =
                 new FirebaseRecyclerAdapter<Orders, OrdersViewHolder>(options) {
                     @Override
+                    //holder is the main line (first item in the ())
+                    //position the is the position of the item (second item in the ())
+                    //model is the model (third item in the ())
                     protected void onBindViewHolder(@NonNull OrdersViewHolder holder, final int position, @NonNull Orders model) {
                         //To make sure they display the decimal places
                         Price = Float.valueOf(model.getTotalAmount());
@@ -105,6 +114,7 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
                         holder.delivery.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+                                //this is the dialog of alertdialog
                                 CharSequence options[] = new CharSequence[]{
                                         "Yes", "No"
                                 };
@@ -142,16 +152,16 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
                     }
                 };
 
+        //this part of recyclerview..need to have setAdapter and startlistening
         ordersList.setAdapter(adapter);
         adapter.startListening();
     }
 
     private void RemoveOrder(String uID, String userNameAsKey) {
 
-
-
         ordersRef.child(uID).removeValue();
 
+        //this is how to use realtime database
         DatabaseReference orderReceipt = FirebaseDatabase.getInstance().getReference()
                 .child("Users")
                 .child(userNameAsKey)
